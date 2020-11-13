@@ -29,11 +29,13 @@
             ],
             "styles": [
               "src/styles.sass",
-              "node_modules/uikit/dist/css/uikit.css"
+              "node_modules/uikit/dist/css/uikit.css",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "node_modules/uikit/dist/js/uikit.js",
-              "node_modules/uikit/dist/js/uikit-icons.js"
+              "node_modules/uikit/dist/js/uikit-icons.js",
+              "./node_modules/leaflet/dist/leaflet.js"
             ]
           },
           "configurations": {
