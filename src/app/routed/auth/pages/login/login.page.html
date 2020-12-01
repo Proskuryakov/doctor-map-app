@@ -1,0 +1,50 @@
+<div class="uk-padding-small">
+  <div uk-grid>
+    <div class="uk-align-center uk-width-1-2@m uk-card uk-card-default uk-card-body">
+
+      <h3 class="uk-card-title uk-text-center">Форма авторизации</h3>
+
+      <div
+        *ngIf="error"
+        class="uk-text-center uk-margin"
+        style="color: red"
+        uk-margin
+      >
+        Ошибка авторизации
+      </div>
+
+      <form
+        #form="ngForm"
+        (ngSubmit)="handleFormSubmit(form.value)"
+      >
+        <div class="uk-placeholder uk-padding-small uk-margin-remove" uk-margin>
+
+          <input
+            class="uk-input"
+            ngModel
+            name="username"
+            placeholder="Введите email"
+            required
+          ><br>
+
+          <input
+            class="uk-input"
+            type="password"
+            ngModel
+            name="password"
+            placeholder="Введите пароль"
+            required
+          ><br>
+
+          <div class="uk-width-expand">
+            <button class="uk-button uk-button-primary uk-width-expand" [disabled]="!form.valid">
+              Авторизоваться
+            </button>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

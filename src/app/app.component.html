@@ -1,32 +1,67 @@
-<div class="uk-card uk-card-default"
-     uk-sticky="sel-target: uk-navbar-container; cls-active: uk-navbar-sticky; show-on-up: true;">
+<div
+  *ngIf="user$ | async as user"
+  class="uk-card uk-card-default"
+  uk-sticky="sel-target: uk-navbar-container; cls-active: uk-navbar-sticky; show-on-up: true;"
+>
 
   <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar="mode: click; boundary-align: true; align: right;">
 
-    <div class="uk-navbar-left">
+    <div *ngIf="user.authenticated" class="uk-navbar-left">
       <ul class="uk-navbar-nav">
         <li class="uk-active">
           <a routerLink="/" uk-icon="home"><span class="uk-margin-small-left uk-visible@s">Главная</span></a>
         </li>
         <li class="uk-active">
-          <a routerLink="/map" uk-icon="map"><span class="uk-margin-small-left uk-visible@s">Карта</span></a>
+          <a routerLink="/map" uk-icon="location"><span class="uk-margin-small-left uk-visible@s">Карта</span></a>
         </li>
       </ul>
     </div>
 
     <div class="uk-navbar-center">
       <ul class="uk-navbar-nav">
-        <li>Hello, {{title}}!</li>
+
+        <ng-container *ngIf="user.authenticated; else justHi">
+          <li class="uk-visible@m">Здравствуйте, {{user.fio}}!</li>
+        </ng-container>
+
+        <ng-template #justHi>
+          <li class="uk-visible@s">Добро пожаловать!</li>
+        </ng-template>
+
       </ul>
     </div>
 
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
 
-        <li><a uk-icon="sign-in"> <span class="uk-visible@s">Авторизация</span></a></li>
+        <ng-container *ngIf="user.authenticated; else nonAuth">
+          <li class="uk-active">
+            <a uk-icon="menu"><span class="uk-margin-small-right uk-visible@s">Меню</span></a>
+            <div class="uk-navbar-dropdown">
+              <ul class="uk-nav uk-navbar-dropdown-nav ">
+                <!--      добавить routerLink на страницу админа-->
+                <li *appPermission="Role.ADMIN"><a routerLink="" uk-icon="settings">Управление</a></li>
+
+                <li><a routerLink="" uk-icon="user">Личный кабинет</a></li>
+                <li><a (click)="handleLogoutClick()" uk-icon="sign-out">Выйти</a></li>
+
+              </ul>
+            </div>
+          </li>
+        </ng-container>
+
+        <ng-template #nonAuth>
+          <li>
+            <a routerLink="/auth/login" uk-icon="sign-in">
+              <span class="uk-visible@s">Авторизация</span>
+            </a>
+          </li>
+        </ng-template>
 
       </ul>
     </div>
   </nav>
 </div>
+
+
 <router-outlet></router-outlet>
