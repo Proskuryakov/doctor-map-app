@@ -1,0 +1,104 @@
+<div class="uk-padding-small">
+  <div uk-grid>
+
+    <div class="uk-align-center uk-width-3-4@m uk-card uk-card-default uk-card-body">
+
+      <h2 class="uk-card-title uk-text-center">Управление заболеваниями</h2>
+
+      <div class="uk-text-center" style="color: {{statusMessageColor}}">
+        {{statusMessage}}
+      </div>
+      <hr>
+
+      <button
+        class="uk-button uk-button-secondary uk-width-1-1 uk-button-large"
+        (click)="addIllness()"
+        [disabled]="isNewRecord"
+      >
+        Добавить
+      </button>
+
+      <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-small uk-table-middle uk-table-divider uk-table-striped">
+
+          <thead>
+          <tr>
+            <th class="uk-width-expand uk-text-center">Название</th>
+            <th class="uk-width-small uk-text-center">Цвет</th>
+            <td class="uk-width-small"></td>
+            <td class="uk-width-small"></td>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let illness of illnesses">
+            <ng-template [ngTemplateOutlet]="loadTemplate(illness)"
+                         [ngTemplateOutletContext]="{ $implicit: illness}">
+            </ng-template>
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!--шаблон для чтения-->
+<ng-template #readOnlyTemplate let-illness>
+  <td class="uk-text-center">{{illness.name}}</td>
+  <td class="uk-text-center">
+    <input class="uk-input uk-width-small" [style.background]="illness.color" [value]="illness.color"
+           [disabled]="true"/>
+  </td>
+  <td>
+    <button class="uk-button uk-button-primary uk-width-expand" (click)="editIllness(illness)">Изменить</button>
+  </td>
+  <td>
+    <button class="uk-button uk-button-danger uk-width-expand" (click)="deleteIllness(illness)">Удалить</button>
+  </td>
+</ng-template>
+
+<!--шаблон для редактирования-->
+<ng-template #editTemplate>
+  <td>
+    <input class="uk-input" type="text" [(ngModel)]="editedIllness.name"/>
+  </td>
+  <td>
+    <input
+      class="uk-input uk-width-small" type="text"
+      [value]="editedIllness.color"
+      [style.background]="editedIllness.color"
+      [cpCancelButton]="true"
+      [cpCancelButtonText]="'Отменить'"
+      [cpOKButton]="true"
+      [cpOKButtonText]="'Сохранить'"
+      [cpOutputFormat]="'hex'"
+      [cpPresetColors]="[
+        '#ffffff',
+        '#88f568',
+        '#fc42fc',
+        '#fff500',
+        '#ff5151',
+        '#ff9c00'
+      ]"
+      [cpAlphaChannel]="'disabled'"
+      [(colorPicker)]="editedIllness.color"
+    />
+
+  </td>
+  <td>
+    <button
+      class="uk-button uk-button-secondary uk-width-expand"
+      [disabled]="!editedIllness.name || !editedIllness.color"
+      (click)="saveIllness()"
+    >
+      Сохранить
+    </button>
+  </td>
+  <td>
+    <button class="uk-button uk-button-default uk-width-expand" (click)="cancel()">Отмена</button>
+  </td>
+</ng-template>
