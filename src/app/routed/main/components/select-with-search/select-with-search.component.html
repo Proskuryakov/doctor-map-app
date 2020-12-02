@@ -1,0 +1,26 @@
+<div>
+  <button class="uk-button uk-button-default uk-width-expand" type="button" aria-expanded="false">{{buttonName}}</button>
+
+  <div class="uk-dropdown uk-dropdown-bottom-left" uk-dropdown="mode: click">
+
+    <div class="uk-margin uk-search uk-search-default">
+      <span uk-search-icon></span>
+      <input [(ngModel)]="searchText" (ngModelChange)="filterArray()" class="uk-search-input">
+    </div>
+
+    <ul class="uk-overflow-auto uk-height-small uk-nav uk-dropdown-nav">
+
+      <li
+        class="uk-active"
+        *ngFor="let option of optionArray"
+        [value]="option"
+        (click)="optionClick(option)"
+      >
+        <a>{{option.name}}</a>
+      </li>
+
+    </ul>
+
+  </div>
+
+</div>

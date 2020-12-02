@@ -7,6 +7,8 @@ import {IllnessPage} from './pages/illness/illness.page';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ColorPickerModule} from 'ngx-color-picker';
+import { SelectWithSearchComponent } from './components/select-with-search/select-with-search.component';
+import { AddressAdditionInputComponent } from './components/address-addition-input/address-addition-input.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import {ColorPickerModule} from 'ngx-color-picker';
     MapComponent,
     MapPage,
     IllnessPage,
+    SelectWithSearchComponent,
+    AddressAdditionInputComponent,
   ],
   imports: [
     MainRoutingModule,

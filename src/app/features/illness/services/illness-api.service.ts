@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IllnessModel} from '../models/illness.model';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
@@ -15,6 +15,12 @@ export class IllnessApiService {
   getAllIllness(): Observable<Array<IllnessModel>> {
     return this.http.get<Array<IllnessModel>>(
       `${environment.api}/illness/`
+    );
+  }
+
+  getAllIllnessLikeName(searchText: string): Observable<Array<IllnessModel>> {
+    return this.http.get<Array<IllnessModel>>(
+      `${environment.api}/illness/`, {params: new HttpParams().set('name', searchText)}
     );
   }
 
