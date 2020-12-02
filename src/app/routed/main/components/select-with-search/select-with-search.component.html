@@ -1,14 +1,16 @@
-<div>
-  <button class="uk-button uk-button-default uk-width-expand" type="button" aria-expanded="false">{{buttonName}}</button>
+<div class="uk-margin-small">
+  <button class="uk-button uk-button-default uk-width-expand" type="button"
+          aria-expanded="false">{{buttonName}}</button>
 
-  <div class="uk-dropdown uk-dropdown-bottom-left" uk-dropdown="mode: click">
+  <div class="uk-dropdown uk-dropdown-top" uk-dropdown="mode: click">
 
     <div class="uk-margin uk-search uk-search-default">
       <span uk-search-icon></span>
       <input [(ngModel)]="searchText" (ngModelChange)="filterArray()" class="uk-search-input">
     </div>
 
-    <ul class="uk-overflow-auto uk-height-small uk-nav uk-dropdown-nav">
+    <ul [ngClass]="{'uk-height-small': optionArray?.length > 5}"
+        class="uk-overflow-auto uk-nav uk-dropdown-nav uk-dropdown-top">
 
       <li
         class="uk-active"

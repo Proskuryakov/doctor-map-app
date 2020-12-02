@@ -6,27 +6,15 @@
 
         <h1 class="uk-card-title">Отображение заболевших</h1>
 
+
         <form (ngSubmit)="handleFormSubmit()">
 
-          <table *ngIf="selectedIllnesses.size"
-                 class="uk-table uk-table-small uk-table-middle">
-
-            <thead>
-            <tr>
-              <th class="uk-text-center">Название</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr *ngFor="let illness of selectedIllnesses">
-              <td class="uk-text-center">
-                  {{illness.name}}
-                  <span uk-icon="close" (click)="deleteIllnessFromSet(illness)"></span>
-              </td>
-            </tr>
-            </tbody>
-
-          </table>
+          <div class="uk-width-expand uk-margin-small-bottom">
+            <button class="uk-button uk-button-secondary uk-width-expand"
+                    [disabled]="!region && selectedIllnesses.size === 0">
+              Отобразить
+            </button>
+          </div>
 
           <app-select-with-search
             [optionArray]="allIllnesses"
@@ -35,10 +23,82 @@
             (searchEvent)="filterIllness($event)"
           ></app-select-with-search>
 
+          <div class="uk-form-stacked uk-margin-small">
+
+            <div>
+              <label class="uk-form-label">Регион</label>
+              <div class="uk-form-controls">
+                <app-address-addition-input
+                  [contentType]="'region'"
+                  (selectContent)="this.region = $event"
+                ></app-address-addition-input>
+              </div>
+            </div>
+            <div>
+              <div class="uk-form-label">Город</div>
+              <div class="uk-form-controls">
+                <app-address-addition-input
+                  [isDisabled]="!region"
+                  [contentType]="'city'"
+                  [parentId]="region?.id"
+                  (selectContent)="this.city = $event"
+                ></app-address-addition-input>
+              </div>
+            </div>
+            <div>
+              <div class="uk-form-label">Улица</div>
+              <div class="uk-form-controls">
+                <app-address-addition-input
+                  [isDisabled]="!city"
+                  [contentType]="'street'"
+                  [parentId]="city?.id"
+                  (selectContent)="this.street = $event"
+                ></app-address-addition-input>
+              </div>
+            </div>
+            <div>
+              <div class="uk-form-label">Дом</div>
+              <div class="uk-form-controls">
+                <app-address-addition-input
+                  [isDisabled]="!street"
+                  [contentType]="'house'"
+                  [parentId]="street?.id"
+                  (selectContent)="this.house = $event"
+                ></app-address-addition-input>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="selectedIllnesses.size > 1" class="uk-margin-small">
+            <label>
+              <input
+                class="uk-checkbox" type="checkbox"
+                (change)="this.isIllnessTogether = !this.isIllnessTogether"
+                [checked]="isIllnessTogether"
+              >
+              Учитывать заболевания одновременно
+            </label>
+          </div>
+
+          <div *ngIf="selectedIllnesses.size" class="uk-text-center uk-text-bolder">
+            Выбранные заболевания:
+          </div>
+
+          <ul
+            class="uk-list uk-list-striped uk-margin-remove"
+            *ngFor="let illness of selectedIllnesses"
+          >
+
+            <li class="uk-text-center">
+              {{illness.name}}
+              <span uk-icon="close" (click)="deleteIllnessFromSet(illness)"></span>
+            </li>
+
+          </ul>
 
 
         </form>
-
 
       </div>
     </div>

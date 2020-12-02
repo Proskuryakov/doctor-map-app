@@ -1,0 +1,33 @@
+<div>
+  <input
+    [disabled]="isDisabled"
+    [(ngModel)]="inputText"
+    (ngModelChange)="refreshAddresses()"
+    class="uk-input"
+  >
+
+  <div class="uk-dropdown uk-dropdown-bottom-left" uk-dropdown="mode: click">
+
+    <ul [ngClass]="{'uk-height-small': addresses?.length > 5}" class="uk-overflow-auto uk-nav uk-dropdown-nav">
+
+      <li *ngIf="!inputText">
+        Начните печатать
+      </li>
+      <li *ngIf="inputText && addresses?.length === 0">
+        Резульатов нет
+      </li>
+
+      <li
+        class="uk-active"
+        *ngFor="let address of addresses"
+        [value]="address.name"
+        (click)="addressClick(address)"
+      >
+        <a>{{address.name}}</a>
+      </li>
+
+    </ul>
+
+  </div>
+
+</div>
