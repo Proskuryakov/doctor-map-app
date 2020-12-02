@@ -17,26 +17,36 @@
         #form="ngForm"
         (ngSubmit)="handleFormSubmit(form.value)"
       >
-        <div class="uk-placeholder uk-padding-small uk-margin-remove" uk-margin>
+        <div class="uk-placeholder uk-child-width-expand uk-padding-small uk-margin-remove" uk-margin>
 
-          <input
-            class="uk-input"
-            ngModel
-            name="username"
-            placeholder="Введите email"
-            required
-          ><br>
+          <div class="uk-inline">
+            <span class="uk-form-icon" uk-icon="icon: user"></span>
+            <input
+              type="email"
+              class="uk-input"
+              ngModel
+              name="email"
+              placeholder="Введите email"
+              required email
+            >
+          </div>
 
-          <input
-            class="uk-input"
-            type="password"
-            ngModel
-            name="password"
-            placeholder="Введите пароль"
-            required
-          ><br>
+          <div class="uk-inline">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+            <input
+              class="uk-input"
+              type="password"
+              ngModel
+              name="password"
+              id="password"
+              placeholder="Введите пароль"
+              required
+              min="4"
 
-          <div class="uk-width-expand">
+            >
+          </div>
+
+          <div>
             <button class="uk-button uk-button-primary uk-width-expand" [disabled]="!form.valid">
               Авторизоваться
             </button>
@@ -44,6 +54,8 @@
 
         </div>
       </form>
+
+      <span *ngIf="isLoading" class="uk-text-center uk-align-center" uk-spinner="ratio: 5"></span>
 
     </div>
   </div>

@@ -3,7 +3,7 @@ import {CurrentUserService} from '../../../../core/auth/current-user.service';
 import {Router} from '@angular/router';
 
 interface LoginFormData {
-  username: string,
+  email: string,
   password: string
 }
 
@@ -13,6 +13,7 @@ interface LoginFormData {
 })
 export class LoginPage implements OnInit {
   error = false;
+  isLoading: boolean = false;
 
   constructor(
     private readonly currentUserService: CurrentUserService,
@@ -23,10 +24,12 @@ export class LoginPage implements OnInit {
 
   handleFormSubmit(value: LoginFormData): void {
     this.error = false;
+    this.isLoading = true;
     this.currentUserService
-      .login(value.username, value.password)
+      .login(value.email, value.password)
       .subscribe(
         () => {
+          this.isLoading = false;
           this.router.navigate(['/']);
         },
         (error) => {
