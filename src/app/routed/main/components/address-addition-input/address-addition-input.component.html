@@ -4,6 +4,7 @@
     [(ngModel)]="inputText"
     (ngModelChange)="refreshAddresses()"
     class="uk-input"
+    [ngClass]="{'uk-form-success': content}"
   >
 
   <div class="uk-dropdown uk-dropdown-bottom-left" uk-dropdown="mode: click">

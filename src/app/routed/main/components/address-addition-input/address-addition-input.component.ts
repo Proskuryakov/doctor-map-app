@@ -17,10 +17,31 @@ export class AddressAdditionInputComponent implements OnInit {
   @Input()
   isDisabled: false;
 
+  contentValue: FiasAddressModel | undefined = undefined;
+
+  @Input()
+  get content() {
+    return this.contentValue;
+  }
+
+  @Output()
+  contentChange = new EventEmitter();
+
+  set content(val) {
+    this.contentValue = val;
+    if (!this.content) {
+      this.inputText = '';
+    }
+    this.contentChange.emit(this.contentValue);
+  }
+
   @Output()
   selectContent = new EventEmitter<any>();
+  @Output()
+  emptyValue = new EventEmitter<any>();
 
   inputText: string;
+
   addresses: Array<FiasAddressModel>;
 
 
@@ -31,6 +52,10 @@ export class AddressAdditionInputComponent implements OnInit {
   }
 
   refreshAddresses() {
+    if (!this.inputText.trim()) {
+      this.content = undefined;
+      this.emptyValue.emit();
+    }
     this.fiasAddressApiService
       .search(this.inputText, this.contentType, this.parentId)
       .subscribe(r => this.addresses = r.slice(1));
@@ -39,6 +64,7 @@ export class AddressAdditionInputComponent implements OnInit {
   addressClick(address: FiasAddressModel) {
     this.inputText = address.name;
     this.addresses = new Array<FiasAddressModel>();
+    this.content = address;
     return this.selectContent.emit(address);
   }
 }
