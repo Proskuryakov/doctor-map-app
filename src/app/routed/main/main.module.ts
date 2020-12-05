@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {MainPage} from './pages/main/main.page';
-import {MapComponent} from './components/map/map.component';
 import {MapPage} from './pages/map/map.page';
 import {MainRoutingModule} from './main-routing.module';
 import {IllnessPage} from './pages/illness/illness.page';
@@ -13,7 +12,6 @@ import {AddressAdditionInputComponent} from './components/address-addition-input
 @NgModule({
   declarations: [
     MainPage,
-    MapComponent,
     MapPage,
     IllnessPage,
     SelectWithSearchComponent,
