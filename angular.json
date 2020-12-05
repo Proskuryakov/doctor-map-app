@@ -30,12 +30,15 @@
             "styles": [
               "src/styles.sass",
               "node_modules/uikit/dist/css/uikit.css",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "./node_modules/leaflet/dist/leaflet.css",
+              "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+              "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"
             ],
             "scripts": [
               "node_modules/uikit/dist/js/uikit.js",
               "node_modules/uikit/dist/js/uikit-icons.js",
-              "./node_modules/leaflet/dist/leaflet.js"
+              "./node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"
             ]
           },
           "configurations": {
@@ -129,6 +132,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "doctor-map-app"
 }
