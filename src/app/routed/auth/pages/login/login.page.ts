@@ -34,6 +34,7 @@ export class LoginPage implements OnInit {
         },
         (error) => {
           console.error('Error', error);
+          this.isLoading = false;
           this.error = true;
         }
       );
