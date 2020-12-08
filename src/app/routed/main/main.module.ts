@@ -8,6 +8,12 @@ import {FormsModule} from '@angular/forms';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {SelectWithSearchComponent} from './components/select-with-search/select-with-search.component';
 import {AddressAdditionInputComponent} from './components/address-addition-input/address-addition-input.component';
+import {SickPage} from './pages/sick/sick.page';
+import {NewSickDialog} from './dialogs/new-sick/new-sick.dialog';
+import {MatDialogModule} from '@angular/material/dialog';
+import {SickModule} from '../../features/sick/sick.module';
+import { UpdateSickDialog } from './dialogs/update-sick/update-sick.dialog';
+import { ChangeIllnessDialog } from './dialogs/change-illlness/change-illness.dialog';
 
 @NgModule({
   declarations: [
@@ -16,12 +22,18 @@ import {AddressAdditionInputComponent} from './components/address-addition-input
     IllnessPage,
     SelectWithSearchComponent,
     AddressAdditionInputComponent,
+    SickPage,
+    NewSickDialog,
+    UpdateSickDialog,
+    ChangeIllnessDialog
   ],
   imports: [
     MainRoutingModule,
+    MatDialogModule,
     CommonModule,
     FormsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    SickModule
   ]
 })
 export class MainModule {

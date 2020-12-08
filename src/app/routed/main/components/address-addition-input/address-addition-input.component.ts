@@ -40,6 +40,7 @@ export class AddressAdditionInputComponent implements OnInit {
   @Output()
   emptyValue = new EventEmitter<any>();
 
+  @Input()
   inputText: string;
 
   addresses: Array<FiasAddressModel>;

@@ -13,7 +13,8 @@ import {MapService} from '../../../../features/map/services/map.service';
 export class MapPage implements OnInit, AfterViewInit {
 
   private map;
-  markers = new Array<L.MarkerClusterGroup>();
+  markerClusterGroup = new L.markerClusterGroup();
+  markers = new Array<L.Marker>();
 
   allIllnesses: Array<IllnessModel>;
   selectedIllnesses = new Array<IllnessModel>();
@@ -50,6 +51,8 @@ export class MapPage implements OnInit, AfterViewInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+
+    this.map.addLayer(this.markerClusterGroup);
   }
 
   addSelectedIllness(illness: IllnessModel) {
@@ -79,7 +82,7 @@ export class MapPage implements OnInit, AfterViewInit {
 
 
   handleFormSubmit() {
-    this.markers.forEach(m => m.clearLayers());
+    this.markerClusterGroup.removeLayers(this.markers);
     this.changeView();
     this.getMarkers();
 
@@ -99,7 +102,7 @@ export class MapPage implements OnInit, AfterViewInit {
     ).subscribe((result) => {
       this.loading = false;
       this.markers = result;
-      result.forEach(markerClusterGroup => this.map.addLayer(markerClusterGroup));
+      this.markerClusterGroup.addLayers(this.markers);
     }, () => {
       this.loading = false;
       this.error = true;

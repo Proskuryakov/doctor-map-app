@@ -1,0 +1,51 @@
+<div class="uk-padding-small">
+  <div uk-grid>
+
+    <div class="uk-align-center uk-width-expand">
+      <div class="uk-card uk-card-default uk-card-body">
+
+        <div class="uk-align-center uk-text-bolder" *ngIf="message"
+             [ngClass]="{'uk-text-success': !error, 'uk-text-danger':error}">
+          {{message}}
+        </div>
+
+        <button
+          (click)="openCreateNewSickDialog()"
+          class="uk-button uk-button-secondary uk-width-1-1 uk-button-large"
+        >
+          Добавить
+        </button>
+
+
+        <table class="uk-table uk-table-small uk-table-middle uk-table-divider uk-table-striped">
+
+          <tbody>
+          <tr *ngFor="let sick of allSick">
+
+            <td class="uk-text-center">{{sick.fullName.surname}} <br>{{sick.fullName.namePatronymic}}</td>
+            <td class="uk-text-left">
+              {{sick.address | oneLineAddress}}
+            </td>
+            <td class="uk-text-center">
+              <button class="uk-button uk-button-default uk-width-auto" (click)="openChangeIllnessDialog(sick)">Посмотреть заболевания</button>
+            </td>
+            <td class="uk-width-small">
+              <button class="uk-button uk-button-primary uk-width-auto" (click)="openUpdateSickDialog(sick)">Изменить
+              </button>
+            </td>
+            <td class="uk-width-small">
+              <button class="uk-button uk-button-danger uk-width-auto" (click)="deleteSick(sick)">Удалить</button>
+            </td>
+
+          </tr>
+          </tbody>
+
+        </table>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+

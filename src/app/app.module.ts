@@ -7,6 +7,7 @@ import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from './core/core.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,8 @@ import {CoreModule} from './core/core.module';
     FormsModule,
     HttpClientModule,
     LeafletModule,
-    CoreModule
+    CoreModule,
+    BrowserAnimationsModule
   ],
   providers: [{
     provide: LOCALE_ID,

@@ -12,17 +12,22 @@
         <form (ngSubmit)="handleFormSubmit()">
 
           <div class="uk-width-expand uk-margin-small-bottom">
-            <button class="uk-button uk-button-secondary uk-width-expand"
-                    (click)="handleFormSubmit()"
-                    [disabled]="!region && selectedIllnesses.length === 0">
+            <button
+              type="submit"
+              class="uk-button uk-button-secondary uk-width-expand"
+              [disabled]="!region && selectedIllnesses.length === 0"
+            >
               Отобразить
             </button>
           </div>
 
           <div class="uk-width-expand uk-margin-small-bottom">
-            <button class="uk-button uk-button-default uk-width-expand"
-                    (click)="clearFields()"
-                    [disabled]="!region && selectedIllnesses.length === 0">
+            <button
+              type="button"
+              class="uk-button uk-button-default uk-width-expand"
+              (click)="clearFields()"
+              [disabled]="!region && selectedIllnesses.length === 0"
+            >
               Очистить поля
             </button>
           </div>

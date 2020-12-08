@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {MainPage} from './pages/main/main.page';
 import {MapPage} from './pages/map/map.page';
 import {IllnessPage} from './pages/illness/illness.page';
+import {SickPage} from './pages/sick/sick.page';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: 'illness',
     component: IllnessPage
   },
+  {
+    path: 'sick',
+    component: SickPage
+  }
 ];
 
 @NgModule({

@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import {Observable, pipe} from 'rxjs';
+import {Observable} from 'rxjs';
 import {SickApiService} from '../../sick/services/sick-api.service';
 import {IllnessModel} from '../../illness/models/illness.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {CoordinatesModel} from '../models/coordinates.model';
-import {flatMap, map, mergeMap, switchMap, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {SickModel} from '../../sick/models/sick.model';
-import {Marker} from '../models/marker.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +34,7 @@ export class MapService {
     city: string | undefined,
     street: string | undefined,
     house: string | undefined
-  ): Observable<Array<L.MarkerClusterGroup>> {
+  ): Observable<Array<L.Marker>> {
 
     return this.sickApiService.getSickByParameters(
       selectedIllness,
@@ -88,37 +87,28 @@ export class MapService {
     selectedIllnesses: Array<IllnessModel>,
     isIllnessTogether: boolean,
     sicks: SickModel[]
-  ): Array<L.MarkerClusterGroup> {
+  ): Array<L.Marker> {
 
-    let groups = new Array<L.MarkerClusterGroup>();
+    let markers = new Array<L.Marker>();
 
     if (selectedIllnesses.length == 0) {
-
-      let markers = L.markerClusterGroup();
 
       for (let sick of sicks) {
         let coordinates = L.latLng(sick.address.lat, sick.address.lon);
         for (let illness of sick.illnesses) {
 
-          markers.addLayer(L.marker(coordinates, {icon: this.getStandardIcon(illness.color)}));
+          markers.push(L.marker(coordinates, {icon: this.getStandardIcon(illness.color)}));
         }
       }
 
-      groups.push(markers);
-
     } else if (isIllnessTogether) {
-
-      let markers = new L.markerClusterGroup();
 
       let icon = this.getStandardIcon(selectedIllnesses[0].color);
       for (let sick of sicks) {
-        markers.addLayer(L.marker(L.latLng(sick.address.lat, sick.address.lon), {icon: icon}));
+        markers.push(L.marker(L.latLng(sick.address.lat, sick.address.lon), {icon: icon}));
       }
 
-      groups.push(markers);
-
     } else {
-      let markers = new L.markerClusterGroup();
 
       for (let illness of selectedIllnesses) {
 
@@ -133,13 +123,13 @@ export class MapService {
             }
             return false;
           })
-          .forEach(sick => markers.addLayer(L.marker(L.latLng(sick.address.lat, sick.address.lon), {icon: icon})));
+          .forEach(sick => markers.push(L.marker(L.latLng(sick.address.lat, sick.address.lon), {icon: icon})));
 
-        groups.push(markers);
       }
+
     }
 
-    return groups;
+    return markers;
 
   }
 
