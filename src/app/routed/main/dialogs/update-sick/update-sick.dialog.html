@@ -1,0 +1,97 @@
+<form class="uk-form-stacked">
+  <div class="uk-flex uk-flex-column uk-width-auto">
+
+    <div class="uk-flex uk-flex-center">
+      <h2 class="uk-width-expand uk-text-center uk-card-title">
+        Редактирование данных больного
+      </h2>
+      <span *ngIf="loading" uk-spinner></span>
+    </div>
+
+    <h4
+      *ngIf="messageText"
+      [ngClass]="{'uk-text-danger': error, 'uk-text-success': message}"
+      class="uk-text-center uk-margin-remove"
+    >
+      {{messageText}}
+    </h4>
+
+    <div>
+      <label class="uk-form-label">Фамилия</label>
+      <div class="uk-form-controls">
+        <input class="uk-input" type="text" name="surname" [(ngModel)]="this.data.fullName.surname">
+      </div>
+    </div>
+
+    <div>
+      <div class="uk-form-label">Имя Отчество</div>
+      <div class="uk-form-controls">
+        <input class="uk-input" type="text" name="namePatronymic" [(ngModel)]="this.data.fullName.namePatronymic">
+      </div>
+    </div>
+
+    <div class="uk-text-center">
+      Место жительства
+    </div>
+
+    <div>
+      <label class="uk-form-label">Регион</label>
+      <div class="uk-form-controls">
+        <app-address-addition-input
+          [contentType]="'region'"
+          [(content)]="region"
+          [inputText]="data.address.region"
+        ></app-address-addition-input>
+      </div>
+    </div>
+    <div>
+      <div class="uk-form-label">Город</div>
+      <div class="uk-form-controls">
+        <app-address-addition-input
+          [contentType]="'city'"
+          [parentId]="region?.id"
+          [(content)]="city"
+          [inputText]="data.address.city"
+        ></app-address-addition-input>
+      </div>
+    </div>
+    <div>
+      <div class="uk-form-label">Улица</div>
+      <div class="uk-form-controls">
+        <app-address-addition-input
+          [contentType]="'street'"
+          [parentId]="city?.id"
+          [(content)]="street"
+          [inputText]="data.address.street"
+        ></app-address-addition-input>
+      </div>
+    </div>
+    <div>
+      <div class="uk-form-label">Дом</div>
+      <div class="uk-form-controls">
+        <app-address-addition-input
+          [contentType]="'building'"
+          [parentId]="street?.id"
+          [(content)]="house"
+          [inputText]="data.address.house"
+        ></app-address-addition-input>
+      </div>
+    </div>
+
+    <div class="uk-flex uk-flex-between uk-margin-small">
+
+      <button
+        class="uk-button uk-button-primary uk-margin-small-right"
+        (click)="updateSick()"
+      >
+        Изменить
+      </button>
+
+      <button class="uk-button uk-button-default uk-margin-small-left" mat-dialog-close="undefined">
+        Закрыть
+      </button>
+
+    </div>
+
+  </div>
+</form>
