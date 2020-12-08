@@ -1,0 +1,137 @@
+<form class="uk-form-stacked">
+  <div class="uk-flex uk-flex-column uk-width-auto">
+
+    <div class="uk-flex uk-flex-center">
+      <h2 class="uk-width-expand uk-text-center uk-card-title">
+        Добавление больного
+      </h2>
+      <span *ngIf="loading" uk-spinner></span>
+    </div>
+
+    <h4
+      *ngIf="messageText"
+      [ngClass]="{'uk-text-danger': error, 'uk-text-success': message}"
+      class="uk-text-center"
+    >
+      {{messageText}}
+    </h4>
+
+    <div class="uk-flex uk-flex-center uk-margin-small">
+      <div class="uk-padding-small">
+        <label class="uk-form-label">Фамилия</label>
+        <div class="uk-form-controls">
+          <input class="uk-input" type="text" name="surname" [(ngModel)]="fullName.surname">
+        </div>
+      </div>
+
+      <div class="uk-padding-small">
+        <div class="uk-form-label">Имя Отчество</div>
+        <div class="uk-form-controls">
+          <input class="uk-input" type="text" name="namePatronymic" [(ngModel)]="fullName.namePatronymic">
+        </div>
+      </div>
+    </div>
+
+    <div class="uk-margin uk-flex uk-flex-between">
+
+
+      <div>
+
+        <div class="uk-text-center">
+          Место жительства
+        </div>
+
+        <div>
+          <label class="uk-form-label">Регион</label>
+          <div class="uk-form-controls">
+            <app-address-addition-input
+              [contentType]="'region'"
+              [(content)]="this.region"
+              (emptyValue)="checkField()"
+            ></app-address-addition-input>
+          </div>
+        </div>
+        <div>
+          <div class="uk-form-label">Город</div>
+          <div class="uk-form-controls">
+            <app-address-addition-input
+              [isDisabled]="!region"
+              [contentType]="'city'"
+              [parentId]="region?.id"
+              [(content)]="city"
+              (emptyValue)="checkField()"
+            ></app-address-addition-input>
+          </div>
+        </div>
+        <div>
+          <div class="uk-form-label">Улица</div>
+          <div class="uk-form-controls">
+            <app-address-addition-input
+              [isDisabled]="!city"
+              [contentType]="'street'"
+              [parentId]="city?.id"
+              [(content)]="street"
+              (emptyValue)="checkField()"
+            ></app-address-addition-input>
+          </div>
+        </div>
+        <div>
+          <div class="uk-form-label">Дом</div>
+          <div class="uk-form-controls">
+            <app-address-addition-input
+              [isDisabled]="!street"
+              [contentType]="'building'"
+              [parentId]="street?.id"
+              [(content)]="house"
+              (emptyValue)="checkField()"
+            ></app-address-addition-input>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="uk-text-center">
+          Список заболеваний:
+        </div>
+
+        <ul
+          class="uk-list uk-list-striped uk-margin-remove uk-overflow-auto"
+          *ngFor="let illness of selectedIllnesses"
+        >
+          <li class="uk-text-center">
+            {{illness.name}}
+            <span uk-icon="close" (click)="deleteSelectedIllness(illness)"></span>
+          </li>
+        </ul>
+
+        <div class="uk-flex-bottom">
+          <app-select-with-search
+            [optionArray]="allIllnesses"
+            [buttonName]="'Добавить заболевание'"
+            (selectedOptionClick)="addSelectedIllness($event)"
+            (searchEvent)="filterIllness($event)"
+          ></app-select-with-search>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="uk-flex uk-flex-between uk-margin-small">
+
+      <button
+        class="uk-button uk-button-primary uk-margin-small-right"
+        [disabled]="isFormNotValid()"
+        (click)="createNewSick()"
+      >
+        Добавить
+      </button>
+
+      <button class="uk-button uk-button-default uk-margin-small-left" mat-dialog-close="undefined">
+        Закрыть
+      </button>
+
+    </div>
+
+  </div>
+</form>
