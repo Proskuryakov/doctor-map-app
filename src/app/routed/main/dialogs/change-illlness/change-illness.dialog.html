@@ -1,0 +1,91 @@
+<form (ngSubmit)="changeIllness()">
+
+  <div class="uk-flex uk-flex-column uk-width-auto">
+
+    <h4 class="uk-width-expand uk-text-center uk-card-title">
+      Больной: {{data.fullName.surname}} {{data.fullName.namePatronymic}}
+    </h4>
+
+    <div class="uk-margin-small">
+      <div class="uk-text-center uk-text-bold">
+        Заболевания:
+      </div>
+
+      <ul
+        class="uk-list uk-list-striped uk-margin-remove"
+        *ngFor="let illness of data.illnesses"
+      >
+        <li class="uk-text-center">
+          {{illness.name}}
+          <span uk-icon="close" (click)="addToDeleteList(illness)"></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="uk-margin-small">
+      <app-select-with-search
+        [optionArray]="allIllnesses"
+        [buttonName]="'Добавить заболевание'"
+        (selectedOptionClick)="addToAddList($event)"
+        (searchEvent)="filterIllness($event)"
+      ></app-select-with-search>
+    </div>
+
+    <div class="uk-flex uk-flex-between uk-margin-small">
+
+      <div>
+        <div class="uk-text-center">
+          Список на удаление:
+        </div>
+        <ul
+          class="uk-list uk-list-striped uk-margin-remove"
+          *ngFor="let illness of illnessForDelete"
+        >
+          <li class="uk-text-center">
+            {{illness.name}}
+            <span uk-icon="close" (click)="deleteFromDeleteList(illness)"></span>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="uk-text-center">
+          Список на добавление:
+        </div>
+        <ul
+          class="uk-list uk-list-striped uk-margin-remove"
+          *ngFor="let illness of illnessForAdd"
+        >
+          <li class="uk-text-center">
+            {{illness.name}}
+            <span uk-icon="close" (click)="deleteFromAddList(illness)"></span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="uk-divider-icon">
+
+    <div class="uk-flex uk-flex-between uk-margin-small">
+
+      <button class="uk-button uk-button-secondary" [disabled]="isSubmitButtonDisable()">
+        Изменить
+      </button>
+
+      <button class="uk-button uk-button-default uk-margin-small-left" mat-dialog-close="undefined">
+        Закрыть
+      </button>
+
+    </div>
+
+    <span class="uk-align-center" *ngIf="loading" uk-spinner></span>
+
+    <div class="uk-align-center uk-text-bolder" *ngIf="message"
+         [ngClass]="{'uk-text-success': !error, 'uk-text-danger':error}">
+      {{message}}
+    </div>
+
+  </div>
+
+</form>
