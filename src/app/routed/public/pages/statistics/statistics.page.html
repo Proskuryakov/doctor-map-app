@@ -1,1 +1,110 @@
-<p>statistics works!</p>
+<div class="uk-padding-small">
+  <div class="uk-flex uk-flex-center" uk-grid>
+
+    <div class="uk-width-1-3@m">
+      <div class="uk-card uk-card-default uk-card-body uk-text-left">
+
+        <div [ngClass]="{'uk-text-danger': error}" class="uk-card-title uk-margin">
+          Настройка статистики
+          <span *ngIf="loading" uk-spinner></span>
+        </div>
+
+        <form class="uk-form-horizontal" (ngSubmit)="display()">
+
+          <div class="uk-margin uk-flex uk-flex-left">
+            <label class="uk-form-label">Сортировать по</label>
+            <select
+              class="uk-select"
+              name="isDescendingSort"
+              [(ngModel)]="isDescendingSort"
+            >
+              <option [value]="true">убыванию</option>
+              <option [value]="false">возрастанию</option>
+            </select>
+          </div>
+
+          <div class="uk-margin uk-width-expand uk-search uk-search-default">
+            <span uk-search-icon></span>
+            <input
+              name="searchText"
+              [(ngModel)]="searchText"
+              (ngModelChange)="illnessSearch()"
+              class="uk-search-input"
+            >
+          </div>
+
+          <div class="uk-height-small uk-overflow-auto">
+            <ul
+              class="uk-list uk-list-striped uk-margin-remove"
+              *ngFor="let illness of allIllness"
+            >
+              <li class="uk-text-center" (click)="selectIllness(illness)">
+                {{illness.name}}
+              </li>
+            </ul>
+          </div>
+
+          <hr class="uk-divider-icon">
+
+          <div class="uk-width-expand uk-margin-small uk-text-center">
+
+            <ng-container *ngIf="selectedIllness else withoutIllness">
+              Выбранное заболевание:<br>
+              {{selectedIllness.name}}
+              <span uk-icon="close" (click)="deleteSelectedIllness()"></span>
+            </ng-container>
+            <ng-template #withoutIllness>
+              Заболевание не выбрано.
+            </ng-template>
+
+          </div>
+
+          <div class="uk-width-expand uk-margin-small">
+            <button
+              type="submit"
+              class="uk-button uk-button-secondary uk-width-expand"
+            >
+              Отобразить
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div class="uk-width-1-3@m">
+      <div class="uk-card uk-card-default uk-card-body">
+
+        <div class="uk-card-title">
+          <ng-container *ngIf="!selectedIllnessName else illnessSelect">
+            Статистика общей заболеваемости по городам
+          </ng-container>
+          <ng-template #illnessSelect>
+            Статистика заболевания {{selectedIllnessName}} по городам
+          </ng-template>
+        </div>
+
+        <div class="uk-flex uk-flex-center">
+          <table class="uk-table uk-table-divider uk-table-hover uk-width-auto">
+
+            <thead>
+            <tr>
+              <th class="uk-width-auto uk-text-center">Город</th>
+              <th class="uk-width-auto uk-text-center">Количество заболевших</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cityCount of citySickCountModels">
+              <td class="uk-width-auto uk-text-center">{{cityCount.city}}</td>
+              <td class="uk-width-auto uk-text-center">{{cityCount.count}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
