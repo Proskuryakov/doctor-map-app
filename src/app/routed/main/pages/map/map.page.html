@@ -101,22 +101,33 @@
             </label>
           </div>
 
-          <div *ngIf="selectedIllnesses.length != 0" class="uk-text-center uk-text-bolder">
+          <div *ngIf="selectedIllnesses.length != 0" class="uk-text-center uk-margin-small">
             Выбранные заболевания:
           </div>
-
-          <ul
-            class="uk-list uk-list-striped uk-margin-remove"
-            *ngFor="let illness of selectedIllnesses"
-          >
-
-            <li class="uk-text-center">
-              {{illness.name}}
-              <span uk-icon="close" (click)="deleteSelectedIllness(illness)"></span>
-            </li>
-
-          </ul>
-
+          <table class="uk-table uk-table-divider uk-table-striped uk-margin-remove">
+            <tbody>
+            <tr *ngFor="let illness of selectedIllnesses">
+              <td class="uk-width-auto uk-text-right">
+                <div
+                  [ngStyle]="
+                {
+                  'background-color':illness.color,
+                  'width': '1.5rem',
+                  'height': '1.5rem',
+                  'display': 'block',
+                  'border-radius':'1.5rem 1.5rem 0',
+                  'transform':'rotate(45deg)',
+                  'border': '1px solid #FFFFFF'
+                }"
+                ></div>
+              </td>
+              <td class="uk-width-auto uk-text-left">
+                {{illness.name}}
+                <span uk-icon="close" (click)="deleteSelectedIllness(illness)"></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
 
         </form>
 
