@@ -1,10 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {MainPage} from './routed/main/pages/main/main.page';
-import {MapPage} from './routed/main/pages/map/map.page';
 import {MainGuard} from './core/guards/main.guard';
 import {AuthGuard} from './core/guards/auth.guard';
-import {EmptyPage} from './core/empty/empty.page';
 
 const routes: Routes = [
   {
@@ -23,6 +20,13 @@ const routes: Routes = [
         m => m.AuthModule
       )
   },
+  {
+    path: 'public',
+    loadChildren: () =>
+      import('./routed/public/public.module').then(
+        m => m.PublicModule
+      )
+  }
 ];
 
 @NgModule({

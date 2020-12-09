@@ -6,13 +6,17 @@
 
   <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar="mode: click; boundary-align: true; align: right;">
 
-    <div *ngIf="user.authenticated" class="uk-navbar-left">
+    <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
-        <li class="uk-active">
+        <li class="uk-active" *ngIf="user.authenticated">
           <a routerLink="/" uk-icon="home"><span class="uk-margin-small-left uk-visible@s">Главная</span></a>
         </li>
-        <li class="uk-active">
+        <li class="uk-active" *ngIf="user.authenticated">
           <a routerLink="/map" uk-icon="location"><span class="uk-margin-small-left uk-visible@s">Карта</span></a>
+        </li>
+        <li class="uk-active">
+          <a routerLink="/public/statistics" uk-icon="social"><span
+            class="uk-margin-small-left uk-visible@s">Статистика</span></a>
         </li>
       </ul>
     </div>
