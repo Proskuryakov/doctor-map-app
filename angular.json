@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.sass",
               "node_modules/uikit/dist/css/uikit.css",
               "./node_modules/leaflet/dist/leaflet.css",
